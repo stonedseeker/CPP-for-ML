@@ -19,7 +19,7 @@ private:
         return 1.0 / (1.0 + std::exp(-z));
     }
 
-private:
+public:
     LogisticRegression(double lr = 0.01, int iterations = 1000)
         : learningRate(lr), numIterations(iterations), bias(0.0) {}
 
