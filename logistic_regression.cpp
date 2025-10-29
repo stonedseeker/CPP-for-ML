@@ -43,46 +43,39 @@ public:
             // calculate the total gradient
             for (size_t i = 0; i < numSamples; i++) {
                 double z = 0.0; // a. first make a prediction 
-                for (size_t j = 0; i < numFeatures; j++) {
+                for (size_t j = 0; j < numFeatures; j++) {
                     z += weights[j] * X[i][j]; // y = wx + c;
                                                // this is the w.x part
                 }
-
                 z += bias; // this is the + c part
 
                 double h = sigmoid(z);
-
                 double error = h - y[i]; // b. calculate the error
 
                 // Accumulate the gradients
                 for (size_t j = 0; j < numFeatures; j++) {
                     dW[j] += error * X[i][j];
                 }
-
                 db += error;
             }
 
             // Average the gradients
-            for (size_t i = 0; i < numSamples; i++) {
+            for (size_t i = 0; i < numFeatures; i++) {
                 dW[i] /= numSamples;
             }
-
             db /= numSamples;
 
             // Go downhill
-            for (size_t i = 0; i < numSamples; i++) {
+            for (size_t i = 0; i < numFeatures; i++) {
                 weights[i] -= dW[i] * learningRate;
             }
 
             bias -= db * learningRate;
-
-
-
         }
 
     }
 
-    std::vector<double> predict_probaility(const std::vector<std::vector<double>>& X) {
+    std::vector<double> predict_probability(const std::vector<std::vector<double>>& X) {
         size_t numSamples = X.size();
         size_t numFeatures = X[0].size();
 
@@ -101,12 +94,11 @@ public:
 
             probabilities.push_back(sigmoid(z));
         }
-
         return probabilities;
     }
 
     std::vector<int> predict(const std::vector<std::vector<double>>& X) {
-        std::vector<double> probabilities = predict_probaility(X);
+        std::vector<double> probabilities = predict_probability(X);
 
         std::vector<int> predictions;
 
@@ -124,7 +116,6 @@ public:
     }
 };
 
-
 int main() {
     std:: vector<std::vector<double>> X = {
         {0.0, 0.0},
@@ -134,7 +125,7 @@ int main() {
     };
 
     std:: vector<double> y = {0.0, 1.0, 1.0, 1.0}; // A Simple OR Gate 
-    LogisticRegression model;
+    LogisticRegression model(0.5, 1000);
 
     try {
         model.fit(X, y);
@@ -152,8 +143,5 @@ int main() {
         std::cerr << "An error occured" << e.what() << std::endl;
         return 1;
     }
-
-
-
     return 0;
 }
