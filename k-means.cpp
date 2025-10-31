@@ -14,7 +14,16 @@ private:
 public:
     KMeans(int numClusters, int maxIter) :
         k(numClusters), maxIterations(maxIter) {}
+    
 
+    double euclideanDistanceSquared(const std::vector<double>& point1, (const std::vector<double>& point2) {
+            double distance = 0.0;
+            for (size_t i = 0; i < point1.size(); ++i) {
+                distance += std::pow(point1[i] - point2[i], 2);
+            }
+
+            return distance;
+    }
     void fit (const std::vector<std::vector<double>>& X) {
         // TODO 
     }
