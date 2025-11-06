@@ -16,7 +16,7 @@ public:
         k(numClusters), maxIterations(maxIter) {}
     
 
-    double euclideanDistanceSquared(const std::vector<double>& point1, (const std::vector<double>& point2) {
+    double euclideanDistanceSquared(const std::vector<double>& point1, const std::vector<double>& point2) {
             double distance = 0.0;
             for (size_t i = 0; i < point1.size(); ++i) {
                 distance += std::pow(point1[i] - point2[i], 2);
